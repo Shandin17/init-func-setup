@@ -1,0 +1,35 @@
+PROGRAM{
+  DECLPROC load_data
+  DECLPROC save_data
+  DECLPROC recv_internal
+  104984 DECLMETHOD counter
+  load_data PROCINLINE:<{
+    c4 PUSH
+    CTOS
+    64 LDU
+    DROP
+  }>
+  save_data PROCINLINE:<{
+    NEWC
+    64 STU
+    ENDC
+    c4 POP
+  }>
+  recv_internal PROC:<{
+    2 1 BLKDROP2
+    32 LDU
+    DROP
+    load_data INLINECALLDICT
+    SWAP
+    1 EQINT
+    IF:<{
+      INC
+      save_data INLINECALLDICT
+    }>ELSE<{
+      DROP
+    }>
+  }>
+  counter PROC:<{
+    load_data INLINECALLDICT
+  }>
+}END>c
