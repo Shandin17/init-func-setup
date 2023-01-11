@@ -1,4 +1,4 @@
-import chai from "chai";
+import chai, {expect} from "chai";
 import chaiBN from "chai-bn";
 import BN from "bn.js";
 import { beforeEach, describe } from "mocha";
@@ -31,6 +31,6 @@ describe("Counter tests", () => {
 
   it("should get init counter value", async () => {
     const call = await contract.invokeGetMethod("counter", []);
-    const counter = call.result[0];
+    expect(call.result[0]).to.be.bignumber.equal(new BN(INIT_COUNTER));
   });
 });
